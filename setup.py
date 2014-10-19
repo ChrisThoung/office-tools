@@ -11,9 +11,9 @@ from distutils.core import setup
 # 3. PATCH - for backwards-compatible bug fixes
 # Source: http://semver.org/spec/v2.0.0.html
 MAJOR = 0
-MINOR = 1
+MINOR = 2
 PATCH = 0
-for_release = True
+for_release = False
 
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, PATCH)
 if not for_release:
@@ -69,6 +69,7 @@ write them to a CSV file.
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Topic :: Office/Business :: Office Suites',
+        'Topic :: Utilities',
         ],
     platforms=['Any'],
     )
