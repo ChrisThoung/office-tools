@@ -38,7 +38,8 @@ def extract_comments(path, comments_file='word/comments.xml'):
         soup = BeautifulSoup(comments)
         contents = soup.body.contents[0]
         comments = {}
-        for chunk in contents:
+        # Loop by individual comment
+        for i, chunk in enumerate(contents):
             # Extract attributes and rename
             comment = chunk.attrs
             comment = {k.replace('w:', ''): v for k, v in comment.items()}
@@ -52,10 +53,13 @@ def extract_comments(path, comments_file='word/comments.xml'):
             text = [t.get_text() for t in text]
             text = ''.join(text)
             comment['text'] = text
-            # Store with 'id' as the key (used in DataFrame index)
-            comments[comment['id']] = comment
+            # Store with counter `i` as key
+            comment['index'] = i
+            comments[i] = comment
+        # Transform into pandas DataFrame and sort
         comments = DataFrame(comments).transpose()
-    # Reorder
-    comments = comments[['initials', 'author', 'date', 'time', 'text']]
+        comments = comments.sort('index')
+        # Select columns in desired order
+        comments = comments[['initials', 'author', 'date', 'time', 'text']]
     # Return
     return comments
